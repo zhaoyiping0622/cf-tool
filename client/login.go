@@ -13,9 +13,10 @@ import (
 	"regexp"
 	"syscall"
 
+	"cf/cookiejar"
+	"cf/util"
+
 	"github.com/fatih/color"
-	"github.com/zhaoyiping0622/cf-tool/cookiejar"
-	"github.com/zhaoyiping0622/cf-tool/util"
 	"golang.org/x/crypto/ssh/terminal"
 )
 

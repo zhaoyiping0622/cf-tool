@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/zhaoyiping0622/cf-tool/util"
+	"cf/util"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/fatih/color"

@@ -11,7 +11,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/zhaoyiping0622/cf-tool/util"
+	"cf/util"
 
 	"github.com/k0kubun/go-ansi"
 

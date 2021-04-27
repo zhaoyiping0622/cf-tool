@@ -6,10 +6,11 @@ import (
 	"io"
 	"strings"
 
+	"cf/client"
+
 	"github.com/fatih/color"
 	ansi "github.com/k0kubun/go-ansi"
 	"github.com/olekukonko/tablewriter"
-	"github.com/zhaoyiping0622/cf-tool/client"
 )
 
 // List command

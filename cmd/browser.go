@@ -1,10 +1,11 @@
 package cmd
 
 import (
+	"cf/client"
+	"cf/config"
+
 	"github.com/fatih/color"
 	"github.com/skratchdot/open-golang/open"
-	"github.com/zhaoyiping0622/cf-tool/client"
-	"github.com/zhaoyiping0622/cf-tool/config"
 )
 
 func openURL(url string) error {

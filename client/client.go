@@ -8,8 +8,9 @@ import (
 	"os"
 	"path/filepath"
 
+	"cf/cookiejar"
+
 	"github.com/fatih/color"
-	"github.com/zhaoyiping0622/cf-tool/cookiejar"
 )
 
 // Client codeforces client

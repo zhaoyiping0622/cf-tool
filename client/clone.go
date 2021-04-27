@@ -7,8 +7,9 @@ import (
 	"sync"
 	"time"
 
+	"cf/util"
+
 	"github.com/fatih/color"
-	"github.com/zhaoyiping0622/cf-tool/util"
 )
 
 type cloneData struct {

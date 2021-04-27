@@ -7,8 +7,9 @@ import (
 	"os"
 	"path/filepath"
 
+	"cf/client"
+
 	"github.com/fatih/color"
-	"github.com/zhaoyiping0622/cf-tool/client"
 )
 
 // CodeTemplate config parse code template

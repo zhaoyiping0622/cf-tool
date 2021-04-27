@@ -7,11 +7,12 @@ import (
 	"sort"
 	"strings"
 
+	"cf/client"
+	"cf/util"
+
 	"github.com/fatih/color"
 	ansi "github.com/k0kubun/go-ansi"
 	homedir "github.com/mitchellh/go-homedir"
-	"github.com/zhaoyiping0622/cf-tool/client"
-	"github.com/zhaoyiping0622/cf-tool/util"
 )
 
 // AddTemplate add template

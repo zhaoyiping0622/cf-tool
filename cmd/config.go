@@ -1,11 +1,12 @@
 package cmd
 
 import (
+	"cf/client"
+	"cf/config"
+	"cf/util"
+
 	"github.com/fatih/color"
 	ansi "github.com/k0kubun/go-ansi"
-	"github.com/zhaoyiping0622/cf-tool/client"
-	"github.com/zhaoyiping0622/cf-tool/config"
-	"github.com/zhaoyiping0622/cf-tool/util"
 )
 
 // Config command
