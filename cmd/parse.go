@@ -4,8 +4,8 @@ import (
 	"errors"
 	"path/filepath"
 
-	"github.com/xalanq/cf-tool/client"
-	"github.com/xalanq/cf-tool/config"
+	"github.com/zhaoyiping0622/cf-tool/client"
+	"github.com/zhaoyiping0622/cf-tool/config"
 )
 
 // Parse command
