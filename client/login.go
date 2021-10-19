@@ -9,8 +9,10 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"net/http"
 	"net/url"
 	"regexp"
+	"strings"
 	"syscall"
 
 	"cf/cookiejar"
@@ -52,6 +54,46 @@ func findCsrf(body []byte) (string, error) {
 	return string(tmp[1]), nil
 }
 
+func AesDecrypt(cipherin []byte, key, iv []byte) ([]byte, error) {
+    block, err := aes.NewCipher(key)
+    if err != nil {
+        return nil, err
+    }
+    blockSize := block.BlockSize()
+    blockMode := cipher.NewCBCDecrypter(block, iv[:blockSize])
+    origData := make([]byte, len(cipherin))
+    blockMode.CryptBlocks(origData, cipherin)
+    return origData, nil
+}
+
+func addRCPC(c *Client, body []byte) ([]byte,error) {
+  if strings.Index(string(body), "Redirecting... Please, wait.") != -1 {
+    reg := regexp.MustCompile(`var a=toNumbers\("([0-9a-f]*)"\),b=toNumbers\("([0-9a-f]*)"\),c=toNumbers\("([0-9a-f]*)"\);`)
+    out := reg.FindAllSubmatch(body, -1)
+    if len(out) != 1 {
+      return nil, fmt.Errorf("cannot find key in body body %v out %+v", string(body), out)
+    } else {
+      key, _ := hex.DecodeString(string(out[0][1]))
+      iv, _ := hex.DecodeString(string(out[0][2]))
+      cipherin, _ := hex.DecodeString(string(out[0][3]))
+      cipherout, err := AesDecrypt(cipherin, key, iv)
+      if err != nil {
+        return nil, err
+      }
+      url,err:=url.Parse(c.host+"/enter")
+      if err != nil {
+        return nil, err
+      }
+      c.client.Jar.SetCookies(url, []*http.Cookie{
+        { Name: "RCPC", Value: hex.EncodeToString(cipherout), },
+      })
+      body,err:=util.GetBody(c.client, c.host+"/enter")
+      return body,err
+    }
+  }
+  return body, nil
+}
+
 // Login codeforces with handler and password
 func (c *Client) Login() (err error) {
 	color.Cyan("Login %v...\n", c.HandleOrEmail)
@@ -67,7 +109,10 @@ func (c *Client) Login() (err error) {
 	if err != nil {
 		return
 	}
-
+  body, err = addRCPC(c, body)
+	if err != nil {
+		return
+	}
 	csrf, err := findCsrf(body)
 	if err != nil {
 		return
