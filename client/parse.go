@@ -18,6 +18,14 @@ import (
 	"github.com/fatih/color"
 )
 
+func cleanInput(body []byte) []byte {
+	rg1 := regexp.MustCompile(`<div.*?>`)
+	rg2 := regexp.MustCompile(`</div>`)
+	body = rg1.ReplaceAll(body, []byte(""))
+	body = rg2.ReplaceAll(body, []byte("\n"))
+	return body
+}
+
 func findSample(body []byte) (input [][]byte, output [][]byte, err error) {
 	irg := regexp.MustCompile(`class="input"[\s\S]*?<pre>([\s\S]*?)</pre>`)
 	org := regexp.MustCompile(`class="output"[\s\S]*?<pre>([\s\S]*?)</pre>`)
@@ -33,7 +41,7 @@ func findSample(body []byte) (input [][]byte, output [][]byte, err error) {
 		return []byte(strings.TrimSpace(s) + "\n")
 	}
 	for i := 0; i < len(a); i++ {
-		input = append(input, filter(a[i][1]))
+		input = append(input, cleanInput(filter(a[i][1])))
 		output = append(output, filter(b[i][1]))
 	}
 	return
